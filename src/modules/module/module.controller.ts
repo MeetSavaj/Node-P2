@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { Bio } from '../../models/bio';
 import { BadRequestResponse, CannotDeleteResponse, SuccessResponse } from "../../helpers/http";
+import db from "../../models/conn";
 
 export class ModuleContoller {
 
@@ -36,6 +37,20 @@ export class ModuleContoller {
             const module = await Bio.findByPk(id);
             if (module) {
                 await module.update(body);
+
+                if(body.gender == 'Male')
+                {
+                     await db.sequelize.query(`UPDATE bio SET femaleName = null
+                WHERE id = '${id}'`,
+                    { type: db.sequelize.QueryTypes.UPDATE});
+                }
+                else 
+                {
+                   await db.sequelize.query(`UPDATE bio SET maleName = null, maleBio = null
+                WHERE id = '${id}'`,
+                    { type: db.sequelize.QueryTypes.UPDATE});
+                }
+
                 return SuccessResponse(res, 'Module updated successfully');
             } else {
                 return BadRequestResponse(res, 'Module not found');
