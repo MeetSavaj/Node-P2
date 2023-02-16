@@ -34,6 +34,7 @@ export class ModuleContoller {
         try {
             const { body } = req;
             const { id } = req.params;
+            console.log(body);
             const module = await Bio.findByPk(id);
             if (module) {
                 await module.update(body);
