@@ -16,7 +16,7 @@ export class ModuleRoutes {
 
         this.router.post('/', [Auth, bodyvalidator(schemaBio)], this.modulectrl.createModule);
 
-        this.router.put('/:id',/*[Auth, bodyvalidator(schemaBio)], */this.modulectrl.updateModule);
+        this.router.put('/:id',[Auth, bodyvalidator(schemaBio)], this.modulectrl.updateModule);
 
         this.router.delete('/:id', [Auth], this.modulectrl.deleteModule);
         
