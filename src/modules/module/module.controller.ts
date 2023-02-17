@@ -21,7 +21,7 @@ export class ModuleContoller {
             const module = await Bio.create(body);
             
             if (module) {
-                return SuccessResponse(res, 'Module created successfully');
+                return SuccessResponse(res, 'Module created successfully', module);
             } else {
                 return BadRequestResponse(res, 'Module already exist');
             }
@@ -34,7 +34,6 @@ export class ModuleContoller {
         try {
             const { body } = req;
             const { id } = req.params;
-            console.log(body);
             const module = await Bio.findByPk(id);
             if (module) {
                 await module.update(body);
